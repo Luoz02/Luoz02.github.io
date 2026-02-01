@@ -1,57 +1,489 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh-CN">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Welcome</title>
-  <style>
-    body {
-      margin: 0;
-      font-family: 'Lora', serif;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      height: 100vh;
-      background: linear-gradient(to right, #a8edea, #fed6e3);
-      text-align: center;
-    }
+<meta charset="UTF-8">
+<title>清醒计划｜青少年健康教育与风险预防</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="清醒计划是一个面向未成年人的健康教育网站，以科学认知与风险预防为核心，不假设任何吸烟或成瘾行为。">
 
-    .container {
-      max-width: 600px;
-    }
+<!--
+【合规声明（源码级）】
+1. 本网站为健康教育与风险预防用途，面向未成年人。
+2. 不假设、不默认、不暗示任何吸烟或成瘾行为已经发生。
+3. 不提供医疗、心理或法律建议。
+4. 不收集、不上传任何个人数据。
+-->
 
-    h1 {
-      font-size: 2.5em;
-      color: #4070a3;
-    }
-
-    p {
-      font-size: 1.2em;
-      color: #555;
-      margin: 20px 0;
-    }
-
-    a.button {
-      display: inline-block;
-      padding: 12px 24px;
-      font-size: 1em;
-      background-color: #4070a3;
-      color: white;
-      text-decoration: none;
-      border-radius: 5px;
-      transition: background-color 0.3s;
-    }
-
-    a.button:hover {
-      background-color: #30807d;
-    }
-  </style>
+<style>
+:root{
+  --bg:#0b0f14;
+  --card:rgba(255,255,255,0.05);
+  --text:#e6edf3;
+  --sub:#8b949e;
+  --accent:#4fd1c5;
+  --accent2:#38b2ac;
+  --border:rgba(255,255,255,.1);
+}
+*{box-sizing:border-box}
+body{
+  margin:0;
+  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;
+  background:linear-gradient(135deg, #0b0f14, #070a0f);
+  color:var(--text);
+  line-height:1.7;
+}
+header{
+  padding:14px 24px;
+  border-bottom:1px solid var(--border);
+  position:sticky;
+  top:0;
+  background:rgba(11,15,20,.92);
+  backdrop-filter:blur(10px);
+  z-index:999;
+}
+.header-inner{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  max-width:1100px;
+  margin:0 auto;
+}
+.logo{
+  display:flex;
+  align-items:center;
+  gap:10px;
+}
+.logo-dot{
+  width:12px;height:12px;border-radius:50%;
+  background:var(--accent);
+  box-shadow:0 0 12px var(--accent);
+}
+.logo-text{
+  font-weight:700;
+  letter-spacing:1px;
+}
+nav{display:flex; gap:10px; flex-wrap:wrap;}
+nav button{
+  background:none;
+  border:1px solid transparent;
+  color:var(--sub);
+  margin-right:6px;
+  font-size:1rem;
+  cursor:pointer;
+  padding:8px 12px;
+  border-radius:10px;
+  transition:all .2s ease;
+}
+nav button:hover{
+  color:var(--text);
+  border-color:rgba(79,209,197,.25);
+  background:rgba(255,255,255,.04);
+}
+nav button.active{
+  color:var(--accent);
+  border-color:rgba(79,209,197,.4);
+  background:rgba(79,209,197,.08);
+}
+main{
+  max-width:1100px;
+  margin:0 auto;
+  padding:40px 24px 80px;
+}
+.progress{
+  height:6px;
+  width:100%;
+  background:rgba(255,255,255,.08);
+  border-radius:10px;
+  overflow:hidden;
+  margin:10px 0 24px;
+}
+.progress > div{
+  height:100%;
+  width:0%;
+  background:linear-gradient(90deg, var(--accent), var(--accent2));
+  border-radius:10px;
+  transition:width .2s ease;
+}
+section{display:none; animation:fade .4s ease;}
+section.active{display:block;}
+@keyframes fade{
+  from{opacity:0; transform:translateY(8px);}
+  to{opacity:1; transform:translateY(0);}
+}
+.grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
+  gap:24px;
+}
+.card{
+  background:var(--card);
+  border-radius:16px;
+  padding:24px;
+  border:1px solid rgba(255,255,255,.06);
+  transition:transform .2s ease, border-color .2s ease;
+}
+.card:hover{
+  transform:translateY(-4px);
+  border-color:rgba(255,255,255,.12);
+}
+.card h3{margin-top:0;color:var(--accent)}
+.notice{
+  margin-top:24px;
+  padding:20px;
+  background:rgba(79,209,197,.08);
+  border-left:4px solid var(--accent);
+  border-radius:8px;
+  color:var(--sub);
+}
+.btn{
+  margin-top:15px;
+  padding:10px 18px;
+  border:none;
+  border-radius:8px;
+  background:var(--accent);
+  font-weight:600;
+  cursor:pointer;
+}
+textarea{
+  width:100%;
+  height:120px;
+  margin-top:10px;
+  background:rgba(0,0,0,.3);
+  border:1px solid rgba(255,255,255,.08);
+  border-radius:10px;
+  color:#fff;
+  padding:12px;
+  resize:vertical;
+}
+footer{
+  text-align:center;
+  padding:40px 24px;
+  color:var(--sub);
+  border-top:1px solid var(--border);
+  background:rgba(0,0,0,.2);
+}
+.footer-inner{
+  max-width:1100px;
+  margin:0 auto;
+  display:flex;
+  justify-content:space-between;
+  flex-wrap:wrap;
+  gap:12px;
+}
+.footer-links a{
+  color:var(--sub);
+  text-decoration:none;
+  margin-right:14px;
+}
+.footer-links a:hover{color:var(--accent)}
+.small{
+  font-size:.85rem;
+  opacity:.85;
+}
+.icon{
+  width:18px;
+  height:18px;
+  vertical-align:middle;
+  margin-right:6px;
+}
+@media(max-width:700px){
+  nav{justify-content:center;}
+  .footer-inner{flex-direction:column; align-items:center;}
+}
+</style>
 </head>
+
 <body>
-  <div class="container">
-    <h1>Welcome to Mark's Website</h1>
-    <p>Click below to start exploring</p>
-    <a class="button" href="Mark1.html">Enter</a>
+<header>
+  <div class="header-inner">
+    <div class="logo">
+      <div class="logo-dot"></div>
+      <div class="logo-text">清醒计划</div>
+    </div>
+    <nav>
+      <button class="active" data-tab="home">首页</button>
+      <button data-tab="knowledge">科学认知</button>
+      <button data-tab="facts">关键事实</button>
+      <button data-tab="skills">判断与拒绝</button>
+      <button data-tab="research">学术研究</button>
+      <button data-tab="ethics">伦理与反思</button>
+      <button data-tab="reflection">自我反思</button>
+    </nav>
   </div>
+</header>
+
+<main>
+  <!-- 进度条 -->
+  <div class="progress"><div id="progressBar"></div></div>
+
+  <section id="home" class="active">
+    <h2>为还未发生的风险，提前做好准备</h2>
+    <p style="color:var(--sub);max-width:700px">
+      清醒计划是一个面向未成年人的健康教育项目，
+      目标不是干预行为，而是帮助青少年在面对潜在风险时，
+      拥有足够的信息、判断力与自我边界感。
+    </p>
+    <div class="grid">
+      <div class="card">
+        <h3>🛡 预防而非假设</h3>
+        <p>本网站不默认任何吸烟行为发生，所有内容均围绕“如何避免第一次尝试”。</p>
+      </div>
+      <div class="card">
+        <h3>🧠 发育阶段保护</h3>
+        <p>青少年时期，大脑仍在快速发育，更需要避免高风险刺激的干扰。</p>
+      </div>
+      <div class="card">
+        <h3>🤝 尊重个人选择</h3>
+        <p>拒绝压力、建立边界，是成熟判断力的重要组成部分。</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="knowledge">
+    <h2>科学认知：为什么“第一次”值得被重视</h2>
+    <div class="grid">
+      <div class="card">
+        <h3>神经反应机制</h3>
+        <p>研究发现，某些物质可能影响大脑的奖赏系统，使大脑对刺激产生错误反馈。</p>
+      </div>
+      <div class="card">
+        <h3>环境与同伴因素</h3>
+        <p>在群体环境中，人更容易做出与自身意愿不一致的选择。</p>
+      </div>
+      <div class="card">
+        <h3>信息先于选择</h3>
+        <p>充分了解潜在后果，有助于减少冲动决策。</p>
+      </div>
+    </div>
+  </section>
+
+<section id="facts">
+  <h2>Facts：基于调研结果的关键认知事实</h2>
+
+  <p style="color:var(--sub);max-width:800px">
+    本页面基于本项目问卷调查与 Kahoot 知识测试结果整理，
+    旨在呈现青少年在电子烟相关知识中
+    容易出现理解偏差的关键事实点。
+    本内容不假设任何使用行为，仅用于支持科学认知与判断能力培养。
+  </p>
+
+  <div class="grid">
+    <div class="card">
+      <h3>电子烟气溶胶并非仅为“水蒸气”</h3>
+      <p>
+        在涉及电子烟产生物质的问题中，
+        部分参与者对气溶胶成分存在简化理解，
+        未能意识到其中可能包含超细颗粒物及其他化学成分。
+      </p>
+    </div>
+
+    <div class="card">
+      <h3>“无焦油”不等同于“无风险”</h3>
+      <p>
+        调研显示，“无焦油”这一表述容易被理解为“完全无害”，
+        但该概念并不能覆盖其他潜在健康风险因素。
+      </p>
+    </div>
+
+    <div class="card">
+      <h3>异常使用情境更容易被忽视</h3>
+      <p>
+        与设备工作原理相关的问题正确率较低，
+        反映出对异常加热或非理想使用状态下风险认知不足。
+      </p>
+    </div>
+
+    <div class="card">
+      <h3>气味感知并非风险判断依据</h3>
+      <p>
+        部分参与者倾向于通过气味强弱判断风险，
+        但感官体验并不能作为健康影响的可靠判断标准。
+      </p>
+    </div>
+  </div>
+
+  <div class="notice">
+    <strong>说明：</strong><br><br>
+    Facts 页面用于总结调研中暴露出的认知盲区，
+    其目的在于支持后续健康教育内容的针对性优化，
+    而非对任何个体行为进行判断或预测。
+  </div>
+</section>
+
+  <section id="skills">
+    <h2>判断与拒绝：实用但温和的方式</h2>
+    <div class="card">
+      <ul style="color:var(--sub)">
+        <li>“不用了，我不太适应这个，谢谢。”</li>
+        <li>“我现在更想保持清醒状态。”</li>
+        <li>“我对这个没兴趣，但还是谢谢你。”</li>
+      </ul>
+      <button class="btn" onclick="randomTip()">随机获取一句应对方式</button>
+      <p id="tip" style="margin-top:15px;color:var(--accent)"></p>
+    </div>
+  </section>
+
+  <section id="research">
+    <h2>学术研究与权威来源</h2>
+    <div class="grid">
+      <div class="card">
+        <h3>世界卫生组织（WHO）</h3>
+        <p>WHO 指出，绝大多数吸烟行为始于青少年时期，预防首次尝试是公共健康的重要策略。</p>
+        <p>
+          原文链接：
+          <a class="source" href="https://www.who.int/news-room/fact-sheets/detail/tobacco" target="_blank">
+            WHO 官方研究页面
+          </a>
+        </p>
+      </div>
+
+      <div class="card">
+        <h3>美国疾病控制与预防中心（CDC）</h3>
+        <p>CDC 的研究显示，青少年大脑对尼古丁等刺激更加敏感，早期接触会增加长期健康风险。</p>
+        <p>
+          原文链接：
+          <a class="source" href="https://www.cdc.gov/tobacco/basic_information/youth/index.htm" target="_blank">
+            CDC 青少年健康研究
+          </a>
+        </p>
+      </div>
+
+      <div class="card">
+        <h3>《The Lancet》医学期刊</h3>
+        <p>多项纵向研究指出，青少年时期的健康行为选择与成年后的健康结果高度相关。</p>
+        <p>
+          原文链接：
+          <a class="source" href="https://www.thelancet.com/series/adolescent-health" target="_blank">
+            The Lancet 青少年健康专题
+          </a>
+        </p>
+      </div>
+    </div>
+
+    <div class="notice">
+      <strong>研究使用说明（Research Use Statement）：</strong><br><br>
+      本网站所引用的研究来自世界卫生组织（WHO）、美国疾病控制与预防中心（CDC）
+      以及《The Lancet》等权威机构。<br><br>
+      这些研究仅用于帮助青少年理解公共健康领域中
+      <em>“为什么预防第一次风险暴露很重要”</em>，
+      而非用于预测、判断或假设任何个人行为。
+    </div>
+
+    <div class="notice">
+      <strong>参考文献（APA 格式）：</strong><br><br>
+      World Health Organization. (2023). <em>Tobacco</em>. https://www.who.int/news-room/fact-sheets/detail/tobacco<br>
+      Centers for Disease Control and Prevention. (2023). <em>Youth and Tobacco Use</em>. https://www.cdc.gov/tobacco/basic_information/youth/index.htm<br>
+      Patton, G. C., Sawyer, S. M., Santelli, J. S., Ross, D. A., Afifi, R., Allen, N. B., ... & Viner, R. M. (2016). <em>Our future: a Lancet commission on adolescent health and wellbeing</em>. The Lancet, 387(10036), 2423-2478. https://www.thelancet.com/series/adolescent-health
+    </div>
+  </section>
+
+  <section id="ethics">
+    <h2>伦理与反思：健康教育的边界</h2>
+    <div class="grid">
+      <div class="card">
+        <h3>避免恐吓式教育</h3>
+        <p>过度恐吓可能引发逆反心理。本项目避免夸张后果或道德指责，尊重青少年的理性判断能力。</p>
+      </div>
+      <div class="card">
+        <h3>尊重未成年人的自主性</h3>
+        <p>健康教育的目标不是替代选择，而是确保选择发生在充分知情的前提下。</p>
+      </div>
+      <div class="card">
+        <h3>信息与干预的区别</h3>
+        <p>本网站仅提供信息与思考框架，不进行行为干预、不设定行为目标。</p>
+      </div>
+    </div>
+    <div class="notice">
+      <strong>伦理声明：</strong><br><br>
+      本项目遵循“最小干预原则”，在不制造压力的前提下提供风险认知支持。
+    </div>
+  </section>
+
+  <section id="reflection">
+    <h2>自我反思：写给未来的自己</h2>
+    <p style="color:var(--sub)">写下一条你希望未来自己感谢现在的理由（仅保存在本地浏览器）。</p>
+    <textarea id="note"></textarea>
+    <button class="btn" onclick="saveNote()">保存</button>
+
+    <div class="notice">
+      <strong>重要声明：</strong><br><br>
+      本网站为健康教育与风险预防用途，不构成医疗或心理建议。
+      所有内容不假设任何吸烟行为已经发生。
+    </div>
+
+    <div class="notice">
+      <strong>项目反思：</strong><br><br>
+      在设计本网站的过程中，我意识到健康教育并不是“告诉别人该怎么做”，
+      而是提供足够的信息，让个体在未来面对真实情境时，
+      能做出不后悔的选择。
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="footer-inner">
+    <div>
+      <strong>清醒计划</strong> · 青少年健康教育项目<br>
+      <span class="small">非医疗建议，仅用于知识普及</span>
+    </div>
+    <div class="footer-links">
+      <a href="#home">首页</a>
+      <a href="#knowledge">科学认知</a>
+      <a href="#research">学术研究</a>
+      <a href="#ethics">伦理与反思</a>
+    </div>
+  </div>
+</footer>
+
+<script>
+const tabs=document.querySelectorAll("nav button");
+const sections=document.querySelectorAll("main section");
+const progressBar=document.getElementById("progressBar");
+
+// 切换页面
+tabs.forEach(b=>{
+  b.onclick=()=>{
+    tabs.forEach(x=>x.classList.remove("active"));
+    sections.forEach(s=>s.classList.remove("active"));
+    b.classList.add("active");
+    document.getElementById(b.dataset.tab).classList.add("active");
+    updateProgress();
+  }
+});
+
+// 随机提示
+const tips=[
+  "我更想保持清醒，谢谢你的理解。",
+  "这个不太适合我。",
+  "不用了，我有自己的选择。"
+];
+function randomTip(){
+  document.getElementById("tip").innerText=tips[Math.floor(Math.random()*tips.length)];
+}
+
+// 本地保存
+function saveNote(){
+  localStorage.setItem("reflection_note",document.getElementById("note").value);
+  alert("内容已保存在本地浏览器中");
+}
+document.getElementById("note").value=localStorage.getItem("reflection_note")||"";
+
+// 进度条（根据页面高度计算）
+function updateProgress(){
+  const activeSection = document.querySelector("section.active");
+  const rect = activeSection.getBoundingClientRect();
+  const height = activeSection.scrollHeight;
+  const visible = window.innerHeight - rect.top;
+  const percent = Math.max(0, Math.min(100, (visible / height) * 100));
+  progressBar.style.width = percent + "%";
+}
+
+// 监听滚动更新进度
+window.addEventListener("scroll", updateProgress);
+window.addEventListener("resize", updateProgress);
+
+// 初始进度
+updateProgress();
+</script>
 </body>
 </html>
